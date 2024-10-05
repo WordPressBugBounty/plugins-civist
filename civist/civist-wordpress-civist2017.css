@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'civist2017';
+    src: url(04f4c8cf34786679769f068efe6255d4.eot);
+    src: url(04f4c8cf34786679769f068efe6255d4.eot?#iefix) format('embedded-opentype'),
+         url(b9a4b1a20252c909c63ff0ca03c2a68f.woff) format('woff'),
+         url(db2ba058415c085d5f2151d22c498f6c.ttf) format('truetype'),
+         url(5601f7286cd1c287f1019b6137bbcc9d.svg#civist) format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+[class*='dashicons-civist']:before{
+	display: inline-block;
+   font-family: 'civist2017';
+   font-style: normal;
+   font-weight: normal;
+   line-height: 1;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale
+}
+.dashicons-civist_symbol_wp:before{content:'C';}
+

@@ -1,0 +1,65 @@
+.wp-block-civist-progress .civist-progress {
+  position: relative;
+  margin-bottom: 16px;
+  margin: auto;
+  min-width: 320px;
+  max-width: 480px;
+}
+
+.wp-block-civist-civist.is-style-progress .civist-progress {
+  max-width: 100%;
+}
+
+.wp-block-civist-progress .civist-progress > .civist-progress__civist-progress-counters > * h3,
+.wp-block-civist-progress .civist-progress > .civist-progress__civist-progress-counters > * h4 {
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.wp-block-civist-progress .civist-progress
+  > .civist-progress__civist-progress-counters
+  > .civist-progress-counters__civist-progress-counters-clear {
+  clear: both;
+}
+
+.wp-block-civist-progress .civist-progress
+  > .civist-progress__civist-progress-counters
+  > .civist-progress-counters__civist-progress-counters-signings {
+  float: left;
+  width: 50%;
+  text-align: left;
+}
+
+.wp-block-civist-progress .civist-progress
+  > .civist-progress__civist-progress-counters
+  > .civist-progress-counters__civist-progress-counters-goal {
+  float: right;
+  text-align: right;
+  width: 50%;
+}
+
+.wp-block-civist-progress .civist-progress > .civist-progress__civist-progress-bar {
+  height: 100%;
+}
+
+.wp-block-civist-progress .civist-progress > .civist-progress__civist-progress-bar {
+  background-color: #f6f5ee;
+}
+.wp-block-civist-progress .civist-progress
+  > .civist-progress__civist-progress-bar
+  > .civist-progress-bar {
+  height: 20px;
+}
+
+.wp-block-civist-progress .civist-progress.civist-progress--loading {
+  display: none;
+}
+
+.wp-block-civist-progress .civist-progress.civist-progress--no-goal
+  > .civist-progress__civist-progress-counters
+  > .civist-progress-counters__civist-progress-counters-goal,
+.civist-progress.civist-progress--no-goal > .civist-progress__civist-progress-bar {
+  display: none;
+}
+
