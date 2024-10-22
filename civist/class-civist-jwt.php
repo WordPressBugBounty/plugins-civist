@@ -119,7 +119,7 @@ class Civist_Jwt {
 			echo( $response_message ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			wp_die(); // this is required to terminate immediately and return a proper response.
 		}
-		$now          = wp_remote_retrieve_body( $response );
+		$now          = (int) wp_remote_retrieve_body( $response );
 		$secret       = $api_key;
 		$key_id       = $api_key_id;
 		$current_user = wp_get_current_user();

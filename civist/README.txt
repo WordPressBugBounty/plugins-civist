@@ -33,6 +33,18 @@ Downloading the plugin and installing it from the ZIP-file is another option. Yo
 
 ## Changelog
 
+### Release 7.7.0 – 2024-10-22
+
+#### Feature Additions
+
+* Spanish translations got an update
+* New translations for all available languages added
+* The Stripe payment integration got an update
+
+#### Bug Fixes
+
+* Fixed: Payment methods P24, Multibanco, Klarna/Sofort
+
 ### Release 7.6.6 – 2024-07-15 - Update recommended
 
 #### Feature Additions

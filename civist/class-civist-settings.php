@@ -148,33 +148,6 @@ class Civist_Settings {
 		);
 
 		add_settings_field(
-			'stackdriver_service_name',
-			'Stackdriver Service Name',
-			array( $this, 'render_text_field' ),
-			$this->plugin_settings_name,
-			$this->plugin_settings_name . '_settings_section',
-			'stackdriver_service_name'
-		);
-
-		add_settings_field(
-			'stackdriver_key',
-			'Stackdriver Key',
-			array( $this, 'render_text_field' ),
-			$this->plugin_settings_name,
-			$this->plugin_settings_name . '_settings_section',
-			'stackdriver_key'
-		);
-
-		add_settings_field(
-			'stackdriver_project_id',
-			'Stackdriver Project ID',
-			array( $this, 'render_text_field' ),
-			$this->plugin_settings_name,
-			$this->plugin_settings_name . '_settings_section',
-			'stackdriver_project_id'
-		);
-
-		add_settings_field(
 			'version',
 			'Version',
 			array( $this, 'render_text_field' ),

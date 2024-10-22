@@ -41,24 +41,6 @@ class Civist {
 	 */
 	private $registration_url;
 	/**
-	 * The plugin stackdriver service name.
-	 *
-	 * @var string
-	 */
-	private $stackdriver_service_name;
-	/**
-	 * The plugin stackdriver key.
-	 *
-	 * @var string
-	 */
-	private $stackdriver_key;
-	/**
-	 * The plugin stackdriver project id.
-	 *
-	 * @var string
-	 */
-	private $stackdriver_project_id;
-	/**
 	 * The url of the geoip service.
 	 *
 	 * @var string
@@ -92,23 +74,17 @@ class Civist {
 	 * @param string $plugin_text_domain The text domain of the plugin.
 	 * @param string $plugin_file The file of the plugin.
 	 * @param string $registration_url The default registration URL for Civist.
-	 * @param string $stackdriver_service_name The Stackdriver service name for Civist.
-	 * @param string $stackdriver_key The Stackdriver key for Civist.
-	 * @param string $stackdriver_project_id The Stackdriver project ID for Civist.
 	 * @param string $geoip_url The url of the GeoIP service.
 	 * @param array  $widget_supported_languages The widget supported languages.
 	 * @param bool   $enforce_https Enforces HTTPS.
 	 */
-	public function __construct( $version, $plugin_name, $plugin_slug, $plugin_text_domain, $plugin_file, $registration_url, $stackdriver_service_name, $stackdriver_key, $stackdriver_project_id, $geoip_url, $widget_supported_languages, $enforce_https ) {
+	public function __construct( $version, $plugin_name, $plugin_slug, $plugin_text_domain, $plugin_file, $registration_url, $geoip_url, $widget_supported_languages, $enforce_https ) {
 		$this->version                    = $version;
 		$this->plugin_name                = $plugin_name;
 		$this->plugin_slug                = $plugin_slug;
 		$this->plugin_text_domain         = $plugin_text_domain;
 		$this->plugin_file                = $plugin_file;
 		$this->registration_url           = $registration_url;
-		$this->stackdriver_service_name   = $stackdriver_service_name;
-		$this->stackdriver_key            = $stackdriver_key;
-		$this->stackdriver_project_id     = $stackdriver_project_id;
 		$this->geoip_url                  = $geoip_url;
 		$this->widget_supported_languages = $widget_supported_languages;
 		$this->enforce_https              = $enforce_https;
@@ -123,12 +99,9 @@ class Civist {
 		$this->oembed_provider  = new Civist_OEmbed( $this->plugin_file, $this->plugin_slug, $this->settings_manager );
 		$this->settings_manager->initialize_plugin_options(
 			array(
-				'version'                  => $this->version,
-				'registration_url'         => $this->registration_url,
-				'stackdriver_service_name' => $this->stackdriver_service_name,
-				'stackdriver_key'          => $this->stackdriver_key,
-				'stackdriver_project_id'   => $this->stackdriver_project_id,
-				'geoip_url'                => $this->geoip_url,
+				'version'          => $this->version,
+				'registration_url' => $this->registration_url,
+				'geoip_url'        => $this->geoip_url,
 			)
 		);
 		if ( is_admin() ) {
@@ -151,12 +124,9 @@ class Civist {
 		if ( $current_version !== $this->version ) {
 			$this->settings_manager->update(
 				array(
-					'version'                  => $this->version,
-					'registration_url'         => $this->registration_url,
-					'stackdriver_service_name' => $this->stackdriver_service_name,
-					'stackdriver_key'          => $this->stackdriver_key,
-					'stackdriver_project_id'   => $this->stackdriver_project_id,
-					'geoip_url'                => $this->geoip_url,
+					'version'          => $this->version,
+					'registration_url' => $this->registration_url,
+					'geoip_url'        => $this->geoip_url,
 				)
 			);
 
