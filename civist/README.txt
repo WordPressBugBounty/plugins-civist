@@ -2,7 +2,7 @@
 Contributors: civist
 Tags: petition, fundraising, donation, activism
 Requires at least: 4.4
-Tested up to: 6.6
+Tested up to: 6.8
 Requires PHP: 5.6
 Stable tag: trunk
 License: MIT
