@@ -32,6 +32,12 @@ class Civist_Settings {
 	 * @var Civist_Settings_Manager
 	 */
 	private $settings_manager;
+	/**
+	 * The plugin connected flag.
+	 *
+	 * @var bool
+	 */
+	private $is_plugin_connected;
 
 	/**
 	 * The Civist_Settings class constructor.

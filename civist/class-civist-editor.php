@@ -33,6 +33,18 @@ class Civist_Editor {
 	 * @var Civist_Script
 	 */
 	private $scripts;
+	/**
+	 * The editor button id.
+	 *
+	 * @var string
+	 */
+	private $editor_button_id;
+	/**
+	 * The editor button click handler name.
+	 *
+	 * @var string
+	 */
+	private $editor_button_click_handler_name;
 
 	const EMBED_BLOCK_NAME    = 'civist/embed';
 	const FORM_BLOCK_NAME     = 'civist/form';

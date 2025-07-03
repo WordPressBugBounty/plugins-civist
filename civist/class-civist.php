@@ -9,7 +9,12 @@
  * The Civist plugin.
  */
 class Civist {
-
+	/**
+	 * The plugin version.
+	 *
+	 * @var string
+	 */
+	private $version;
 	/**
 	 * The plugin name.
 	 *
@@ -64,6 +69,24 @@ class Civist {
 	 * @var bool
 	 */
 	private $enforce_https;
+	/**
+	 * The plugin oembed provider.
+	 *
+	 * @var Civist_OEmbed
+	 */
+	private $oembed_provider;
+	/**
+	 * The plugin jwt manager.
+	 *
+	 * @var Civist_Jwt
+	 */
+	private $plugin_jwt;
+	/**
+	 * The plugin scripts.
+	 *
+	 * @var Civist_Scripts
+	 */
+	private $plugin_scripts;
 
 	/**
 	 * The Civist class constructor

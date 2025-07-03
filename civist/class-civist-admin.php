@@ -63,6 +63,12 @@ class Civist_Admin {
 	 * @var Civist_Editor
 	 */
 	private $editor;
+	/**
+	 * The plugin connected flag.
+	 *
+	 * @var bool
+	 */
+	private $is_plugin_connected;
 
 	/**
 	 * The Civist_Admin class constructor
@@ -111,7 +117,7 @@ class Civist_Admin {
 				add_options_page( $this->plugin_slug, $this->plugin_name, 'manage_options', $this->plugin_slug . '-settings', array( $this->settings, 'options_page' ) );
 			}
 			// TODO: Remove me when advanced settings are no longer necessary.
-			add_submenu_page( null, $this->plugin_name, $this->plugin_name, 'manage_options', $this->plugin_slug . '-advanced-settings', array( $this->settings, 'advanced_options_page' ) );
+			add_submenu_page( '', $this->plugin_name, $this->plugin_name, 'manage_options', $this->plugin_slug . '-advanced-settings', array( $this->settings, 'advanced_options_page' ) );
 		}
 	}
 

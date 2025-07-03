@@ -56,6 +56,12 @@ class Civist_Scripts {
 	 * @var bool
 	 */
 	private $enforce_https;
+	/**
+	 * The plugin jwt manager.
+	 *
+	 * @var ?Civist_Jwt
+	 */
+	private $jwt;
 
 	/**
 	 * The Civist_Admin class constructor
@@ -68,7 +74,7 @@ class Civist_Scripts {
 	 * @param bool                    $enforce_https Enforces HTTPS.
 	 * @param Civist_Jwt              $jwt The plugin jwt manager.
 	 */
-	public function __construct( $plugin_name, $plugin_file, $plugin_slug, Civist_Settings_Manager $settings_manager, $widget_supported_languages, $enforce_https, Civist_Jwt $jwt = null ) {
+	public function __construct( $plugin_name, $plugin_file, $plugin_slug, Civist_Settings_Manager $settings_manager, $widget_supported_languages, $enforce_https, ?Civist_Jwt $jwt = null ) {
 		$this->plugin_name                = $plugin_name;
 		$this->plugin_file                = $plugin_file;
 		$this->plugin_slug                = $plugin_slug;

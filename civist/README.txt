@@ -3,7 +3,7 @@ Contributors: civist
 Tags: petition, fundraising, donation, activism
 Requires at least: 4.4
 Tested up to: 6.8
-Requires PHP: 5.6
+Requires PHP: 7.1
 Stable tag: trunk
 License: MIT
 License URI: https://opensource.org/licenses/MIT
@@ -32,6 +32,19 @@ Downloading the plugin and installing it from the ZIP-file is another option. Yo
 * Activate the plugin
 
 ## Changelog
+
+### Release 7.8.0 – 2025-07-03
+
+#### Feature Additions
+
+* Petition translations got an update
+* Plugin translations got an update
+* The plugin’s GDPR info was updated with our new company address
+* A deprecation warning from PHP 8.2 onwards was removed
+
+#### Removed Features
+
+* Support for PHP 5.6 has been discontinued. PHP 7.1 is now the minimum supported version.
 
 ### Release 7.7.0 – 2024-10-22
 
