@@ -7,5 +7,5 @@
  * @package civist
  */
 
-$webpack_files = json_decode( '{"embed":{"size":223480,"entry":"civist-wordpress-blocks-embed.js","hash":"bcde325be76551dd41fc","css":["civist-wordpress-blocks-embed.css"]},"editor":{"size":2155799,"entry":"civist-wordpress-blocks-editor.js","hash":"4e7a35759722d22e8f0e","css":[]}}' );
+$webpack_files = json_decode( '{"embed":{"size":223481,"entry":"civist-wordpress-blocks-embed.js","hash":"d0e41a838e05827a1111","css":["civist-wordpress-blocks-embed.css"]},"editor":{"size":2155800,"entry":"civist-wordpress-blocks-editor.js","hash":"2a11b205aa208574088f","css":[]}}' );
 

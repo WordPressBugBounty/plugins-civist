@@ -2,7 +2,7 @@
 Contributors: civist
 Tags: petition, fundraising, donation, activism
 Requires at least: 4.4
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 7.1
 Stable tag: trunk
 License: MIT
@@ -32,6 +32,14 @@ Downloading the plugin and installing it from the ZIP-file is another option. Yo
 * Activate the plugin
 
 ## Changelog
+
+### Release 7.9.0 - 2025-12-18
+
+#### Feature Additions
+
+* The plugin is ready for WordPress 6.9
+* Slovak translations got an update
+* The plugin's GDPR info was updated: MailGun was removed from the subprocessor list
 
 ### Release 7.8.0 – 2025-07-03
 
