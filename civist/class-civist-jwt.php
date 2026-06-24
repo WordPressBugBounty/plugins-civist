@@ -5,11 +5,15 @@
  * @package civist
  */
 
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Imports
  */
 if ( ! class_exists( '\\Firebase\\JWT\\JWT' ) ) {
-	require_once 'JWT.php';
+	require_once 'vendor/firebase/php-jwt/src/JWT.php';
 }
 use Firebase\JWT\JWT;
 
@@ -102,10 +106,8 @@ class Civist_Jwt {
 	 * Handle http get request and return a newly created JWT token.
 	 */
 	public function serve_jwt_token() {
-		if ( ! $this->settings_manager->is_connected() ) {
-			status_header( 403 );
-			echo( 'Forbidden' );
-			wp_die(); // this is required to terminate immediately and return a proper response.
+		if ( ! $this->settings_manager->is_connected() || ! current_user_can( 'edit_pages' ) ) {
+			wp_die( 'Forbidden', 403 );
 		}
 		$api_url          = $this->settings_manager->get_option_by_name( 'api_url' );
 		$api_key          = $this->settings_manager->get_option_by_name( 'api_key' );
@@ -115,9 +117,7 @@ class Civist_Jwt {
 		$response_status  = wp_remote_retrieve_response_code( $response );
 		$response_message = wp_remote_retrieve_response_message( $response );
 		if ( $response_status < 200 || $response_status >= 300 ) {
-			status_header( $response_status );
-			echo( $response_message ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			wp_die(); // this is required to terminate immediately and return a proper response.
+			wp_send_json_error( $response_message, $response_status );
 		}
 		$now          = (int) wp_remote_retrieve_body( $response );
 		$secret       = $api_key;
@@ -134,7 +134,6 @@ class Civist_Jwt {
 			$name  = $this->convert_to_utf8( $current_user->display_name );
 			$jwt   = $this->generate_jwt( $key_id, $secret, $now, $sub, $email, $name, $api_url );
 		}
-		echo( $jwt ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		wp_die(); // this is required to terminate immediately and return a proper response.
+		wp_send_json( array( 'token' => $jwt ) );
 	}
 }

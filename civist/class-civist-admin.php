@@ -97,21 +97,22 @@ class Civist_Admin {
 	 * Build the plugin's menu entries.
 	 */
 	public function add_admin_menu() {
-		if ( current_user_can( 'edit_posts' ) || current_user_can( 'manage_options' ) ) {
+		if ( current_user_can( 'edit_pages' ) || current_user_can( 'manage_options' ) ) {
 			global $submenu;
 			$plugin_page_url = admin_url( 'admin.php' ) . '?page=' . $this->plugin_slug;
-			add_menu_page( $this->plugin_name, $this->plugin_name, 'edit_posts', $this->plugin_slug, array( $this, 'render_manager' ), 'dashicons-civist_symbol_wp', 22 );
+			$manager_cap     = $this->is_plugin_connected ? 'edit_pages' : 'manage_options';
+			add_menu_page( $this->plugin_name, $this->plugin_name, $manager_cap, $this->plugin_slug, array( $this, 'render_manager' ), 'dashicons-civist_symbol_wp', 22 );
 			if ( ! $this->is_plugin_connected ) {
 				$submenu['options-general.php'][] = array( $this->plugin_name, 'manage_options', $plugin_page_url ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			} else {
 				/* translators: The menu link to show the plugin dashboard page. */
-				$submenu[ $this->plugin_slug ][] = array( _x( 'Dashboard', 'wp.plugin.manager.menu.dashboard', 'civist' ), 'edit_posts', $plugin_page_url . '#/' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+				$submenu[ $this->plugin_slug ][] = array( _x( 'Dashboard', 'wp.plugin.manager.menu.dashboard', 'civist' ), 'edit_pages', $plugin_page_url . '#/' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 				/* translators: The menu link to show the plugin all petitions page. */
-				$submenu[ $this->plugin_slug ][] = array( _x( 'Petitions', 'wp.plugin.manager.menu.all_petitions', 'civist' ), 'edit_posts', $plugin_page_url . '#/petitions' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+				$submenu[ $this->plugin_slug ][] = array( _x( 'Petitions', 'wp.plugin.manager.menu.all_petitions', 'civist' ), 'edit_pages', $plugin_page_url . '#/petitions' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 				/* translators: The menu link to show the plugin all donation forms page. */
-				$submenu[ $this->plugin_slug ][] = array( _x( 'Donation Forms', 'wp.plugin.manager.menu.all_donation_forms', 'civist' ), 'edit_posts', $plugin_page_url . '#/donation_forms' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+				$submenu[ $this->plugin_slug ][] = array( _x( 'Donation Forms', 'wp.plugin.manager.menu.all_donation_forms', 'civist' ), 'edit_pages', $plugin_page_url . '#/donation_forms' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 				/* translators: The menu link to show the plugin all supporters page. */
-				$submenu[ $this->plugin_slug ][] = array( _x( 'Supporters', 'wp.plugin.manager.menu.all_supporters', 'civist' ), 'edit_posts', $plugin_page_url . '#/supporters' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+				$submenu[ $this->plugin_slug ][] = array( _x( 'Supporters', 'wp.plugin.manager.menu.all_supporters', 'civist' ), 'edit_pages', $plugin_page_url . '#/supporters' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 				/* translators: The menu link to show the settings page. */
 				$submenu[ $this->plugin_slug ][] = array( _x( 'Settings', 'wp.plugin.manager.menu.settings', 'civist' ), 'manage_options', admin_url( 'options-general.php' ) . '?page=' . $this->plugin_slug . '-settings' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 				add_options_page( $this->plugin_slug, $this->plugin_name, 'manage_options', $this->plugin_slug . '-settings', array( $this->settings, 'options_page' ) );
@@ -125,7 +126,7 @@ class Civist_Admin {
 	 * Render the plugin manager page.
 	 */
 	public function render_manager() {
-		if ( ! current_user_can( 'edit_posts' ) ) {
+		if ( ! current_user_can( 'edit_pages' ) ) {
 			wp_die( "You don't have sufficient permissions to access this page." );
 		}
 		require_once 'civist-container.php';
@@ -151,33 +152,28 @@ class Civist_Admin {
 	public function enqueue_scripts( $hook_suffix ) {
 		include 'civist-scripts.php'; // exposes $webpack-files variable.
 
-		$this->scripts->enqueue_civist_icon_font( $webpack_files );
+		$this->scripts->enqueue_civist_icon_font( $civist_webpack_files );
 		// advanced settings page.
 		if ( strpos( $hook_suffix, $this->plugin_slug . '-advanced-settings' ) !== false ) {
 			return;
 		}
 
-		if ( strpos( $hook_suffix, 'post' ) !== false || strpos( $hook_suffix, $this->plugin_slug ) !== false || strpos( $hook_suffix, 'plugins' ) !== false ) {
-			// any plugin page.
-			$this->scripts->enqueue_freshdesk_widget_scripts();
-		}
-
 		if ( ! $this->is_plugin_connected ) {
 			if ( strpos( $hook_suffix, $this->plugin_slug ) !== false ) {
 				// registration page.
-				$this->scripts->enqueue_registration_scripts( $webpack_files );
+				$this->scripts->enqueue_registration_scripts( $civist_webpack_files );
 			}
 		} elseif ( strpos( $hook_suffix, 'plugins' ) !== false ) {
 			// plugins page.
-			$this->scripts->enqueue_plugins_scripts( $webpack_files, $this->reconnect_link_id );
+			$this->scripts->enqueue_plugins_scripts( $civist_webpack_files, $this->reconnect_link_id );
 
 		} elseif ( strpos( $hook_suffix, $this->plugin_slug ) !== false && strpos( $hook_suffix, 'settings' ) === false ) {
 			// manager page.
-			$this->scripts->enqueue_manager_scripts( $webpack_files );
+			$this->scripts->enqueue_manager_scripts( $civist_webpack_files );
 
 		} elseif ( strpos( $hook_suffix, $this->plugin_slug . '-settings' ) !== false ) {
 			// settings page.
-			$this->scripts->enqueue_settings_scripts( $webpack_files );
+			$this->scripts->enqueue_settings_scripts( $civist_webpack_files );
 		} elseif ( strpos( $hook_suffix, 'post' ) !== false ) {
 			// post/page editor page.
 			$this->editor->enqueue_editor_scripts();

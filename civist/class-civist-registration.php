@@ -29,8 +29,10 @@ class Civist_Registration {
 	 * Add action to render the plugin's connect notice.
 	 */
 	public function show_connect_notice() {
-		add_action( 'admin_notices', array( $this, 'civist_connect_notice' ) );
-		add_action( 'wp_dashboard_setup', array( $this, 'wp_dashboard_civist_connect_widget' ) );
+		if ( current_user_can( 'manage_options' ) ) {
+			add_action( 'admin_notices', array( $this, 'civist_connect_notice' ) );
+			add_action( 'wp_dashboard_setup', array( $this, 'wp_dashboard_civist_connect_widget' ) );
+		}
 	}
 
 	/**
@@ -93,8 +95,9 @@ class Civist_Registration {
 		);
 
 		global $wp_meta_boxes;
-		$dashboard                                    = $wp_meta_boxes['dashboard']['normal']['core'];
-		$wp_meta_boxes['dashboard']['normal']['core'] = array_merge( // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		$dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		$wp_meta_boxes['dashboard']['normal']['core'] = array_merge(
 			array(
 				'civist_widget' => $dashboard['civist_widget'],
 			),

@@ -89,7 +89,7 @@ class Civist_Editor {
 	 */
 	public function enqueue_editor_scripts() {
 		include 'civist-scripts.php'; // exposes $webpack-files variable.
-		$this->scripts->enqueue_editor_scripts( $webpack_files, $this->editor_button_click_handler_name, $this::EMBED_BLOCK_NAME, $this::FORM_BLOCK_NAME, $this::PROGRESS_BLOCK_NAME, $this::CIVIST_BLOCK_NAME );
+		$this->scripts->enqueue_editor_scripts( $civist_webpack_files, $this->editor_button_click_handler_name, $this::EMBED_BLOCK_NAME, $this::FORM_BLOCK_NAME, $this::PROGRESS_BLOCK_NAME, $this::CIVIST_BLOCK_NAME );
 	}
 
 	/**
@@ -148,7 +148,7 @@ class Civist_Editor {
 	 * Register the plugin progress block for the block editor
 	 */
 	private function register_plugin_progress_block() {
-		include 'civist-blocks-scripts.php'; // exposes $webpack-files variable.
+		include 'civist-blocks-scripts.php'; // exposes $civist_webpack_files variable.
 
 		/* translators: The title of the Civist block that contains a petition's progress using the block editor. */
 		$title = _x( 'Civist progress', 'wp.plugin.block.civist_progress.title', 'civist' );
@@ -170,11 +170,11 @@ class Civist_Editor {
 	 * Register the plugin main block for the block editor
 	 */
 	private function register_plugin_civist_block() {
-		include 'civist-blocks-scripts.php'; // exposes $webpack-files variable.
+		include 'civist-blocks-scripts.php'; // exposes $civist_webpack_files variable.
 		$script        = 'civist_blocks_embed';
 		$editor_script = 'civist_blocks';
 		$style         = 'civist_blocks_style';
-		wp_register_script( $editor_script, plugin_dir_url( __FILE__ ) . $webpack_files->editor->entry, array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-url' ), $webpack_files->editor->hash, true );
+		wp_register_script( $editor_script, plugin_dir_url( __FILE__ ) . $civist_webpack_files->editor->entry, array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-url' ), $civist_webpack_files->editor->hash, true );
 		wp_localize_script(
 			$editor_script,
 			'civist',
@@ -189,9 +189,9 @@ class Civist_Editor {
 				)
 			)
 		);
-		wp_register_script( $script, plugin_dir_url( __FILE__ ) . $webpack_files->embed->entry, array( 'wp-dom-ready' ), $webpack_files->embed->hash, true );
+		wp_register_script( $script, plugin_dir_url( __FILE__ ) . $civist_webpack_files->embed->entry, array( 'wp-dom-ready' ), $civist_webpack_files->embed->hash, true );
 		wp_localize_script( $script, 'civist_public', $this->scripts->get_public_configuration() );
-		wp_register_style( $style, plugin_dir_url( __FILE__ ) . $webpack_files->embed->css[0], array(), $webpack_files->embed->hash );
+		wp_register_style( $style, plugin_dir_url( __FILE__ ) . $civist_webpack_files->embed->css[0], array(), $civist_webpack_files->embed->hash );
 
 		/* translators: The title of the Civist block for embedding a petition or donation form using the block editor. */
 		$title = _x( 'Civist', 'wp.plugin.block.civist_civist.title', 'civist' );

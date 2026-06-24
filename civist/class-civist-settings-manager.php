@@ -87,16 +87,20 @@ class Civist_Settings_Manager {
 	 * Handle and persist the plugin registration http call.
 	 */
 	public function handle_settings_from_client() {
-		if ( isset( $_POST['apiKey'], $_POST['apiKeyId'], $_POST['apiUrl'], $_POST['widgetUrl'], $_POST['oEmbedUrl'], $_POST['nonce'] ) && wp_verify_nonce( sanitize_key( $_POST['nonce'] ), $this->nonce_action ) ) { // Input var okay.
-			$api_key    = $this->sanitize_key( wp_unslash( $_POST['apiKey'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			$api_key_id = sanitize_text_field( wp_unslash( $_POST['apiKeyId'] ) );
-			$api_url    = sanitize_text_field( wp_unslash( $_POST['apiUrl'] ) );
-			$widget_url = sanitize_text_field( wp_unslash( $_POST['widgetUrl'] ) );
-			$oembed_url = sanitize_text_field( wp_unslash( $_POST['oEmbedUrl'] ) );
-		} else {
-			status_header( 400 );
-			wp_die(); // this is required to terminate immediately and return a proper response.
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( "You don't have sufficient permissions to access this page.", 403 );
 		}
+		if ( ! isset( $_POST['apiKey'], $_POST['apiKeyId'], $_POST['apiUrl'], $_POST['widgetUrl'], $_POST['oEmbedUrl'], $_POST['nonce'] ) ||
+			! wp_verify_nonce( sanitize_key( $_POST['nonce'] ), $this->nonce_action ) ) {
+			wp_die( 'Bad Request', 400 );
+		}
+
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- using custom sanitizer because builtin sanitzers mangle the API key
+		$api_key    = self::sanitize_key( wp_unslash( $_POST['apiKey'] ) );
+		$api_key_id = sanitize_text_field( wp_unslash( $_POST['apiKeyId'] ) );
+		$api_url    = sanitize_text_field( wp_unslash( $_POST['apiUrl'] ) );
+		$widget_url = sanitize_text_field( wp_unslash( $_POST['widgetUrl'] ) );
+		$oembed_url = sanitize_text_field( wp_unslash( $_POST['oEmbedUrl'] ) );
 
 		$options = array(
 			'api_key'    => $api_key,
@@ -221,9 +225,9 @@ class Civist_Settings_Manager {
 	 *
 	 * @param string $key The key to be sanitized.
 	 */
-	private function sanitize_key( $key ) {
+	public static function sanitize_key( $key ) {
 		$raw_key = $key;
 		$key     = preg_replace( '/[^0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*\-+]/', '', $key );
-		return apply_filters( 'sanitize_key', $key, $raw_key );
+		return $key;
 	}
 }

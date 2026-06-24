@@ -163,7 +163,6 @@ class Civist {
 	private function load_dependencies() {
 		require_once 'class-civist-settings-manager.php';
 		require_once 'class-civist-oembed.php';
-		require_once 'class-civist-i18n.php';
 		require_once 'class-civist-shortcode.php';
 		require_once 'class-civist-settings.php';
 		require_once 'class-civist-scripts.php';
@@ -188,7 +187,6 @@ class Civist {
 			add_action( 'admin_init', array( $plugin_settings, 'register_settings' ) );
 			add_filter( 'plugin_action_links_' . plugin_basename( $this->plugin_file ), array( $plugin_settings, 'register_settings_plugin_action_link' ) );
 
-			add_filter( 'script_loader_tag', array( $this->plugin_scripts, 'add_async' ), 11, 2 );
 			$plugin_editor = new Civist_Editor( $this->plugin_name, $this->plugin_file, $this->plugin_slug, $this->plugin_scripts );
 			$plugin_admin  = new Civist_Admin( $this->plugin_name, $this->plugin_file, $this->plugin_slug, $this->settings_manager, $plugin_settings, $this->plugin_scripts, $plugin_editor );
 			add_action( 'admin_menu', array( $plugin_admin, 'add_admin_menu' ) );
@@ -216,9 +214,6 @@ class Civist {
 	 * Registers all of the hooks not specific to the admin area.
 	 */
 	private function define_non_admin_hooks() {
-		$plugin_i18n = new Civist_I18n( $this->plugin_text_domain );
-		add_action( 'plugins_loaded', array( $plugin_i18n, 'load_textdomain' ) );
-
 		if ( $this->settings_manager->is_connected() ) {
 			add_action( 'init', array( $this->oembed_provider, 'oembed_provider' ) );
 			add_filter( 'http_request_host_is_external', array( $this->oembed_provider, 'allow_localhost' ), 10, 3 );

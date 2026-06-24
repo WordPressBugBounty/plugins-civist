@@ -1,10 +1,10 @@
 # Civist - Petitions and Fundraising
 Contributors: civist
 Tags: petition, fundraising, donation, activism
-Requires at least: 4.4
+Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 7.1
-Stable tag: trunk
+Stable tag: 8.0.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -32,6 +32,17 @@ Downloading the plugin and installing it from the ZIP-file is another option. Yo
 * Activate the plugin
 
 ## Changelog
+
+### Release 8.0.0 – 2026-06-24 - Security Update Recommended
+
+#### Removed Features
+
+* Discontinued the built-in Freshdesk support widget integration.
+
+#### Bug Fixes
+
+* **Security Hardening:** Fixed an authenticated settings poisoning vulnerability that allowed unauthorized modification of API configurations and potential Server-Side Request Forgery (SSRF).
+* **Access Control:** Tightened security permissions across all AJAX handlers. Global settings management is now strictly locked to the `manage_options` capability (Administrators), while petition and donation form management now requires Editor privileges or above.
 
 ### Release 7.9.1 - 2026-05-21
 

@@ -5,6 +5,10 @@
  * @package civist
  */
 
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Imports
  */
@@ -82,7 +86,13 @@ class Civist_Settings {
 	 * Register the plugin settings using the WordPress settings API.
 	 */
 	public function register_settings() {
-		register_setting( $this->plugin_settings_name, $this->plugin_slug );
+		register_setting(
+			$this->plugin_settings_name,
+			$this->plugin_slug,
+			array(
+				'sanitize_callback' => array( $this, 'sanitize_settings_callback' ),
+			)
+		);
 		add_settings_section(
 			$this->plugin_settings_name . '_settings_section',
 			'Advanced Settings',
@@ -205,6 +215,44 @@ class Civist_Settings {
 		?>
 		</form>
 		<?php
+	}
+
+	/**
+	 * Sanitizes the settings array before it is saved to the database.
+	 *
+	 * @param array $input The raw settings input submitted from the form.
+	 * @return array The sanitized settings.
+	 */
+	public function sanitize_settings_callback( $input ) {
+		// Ensure we are working with an array.
+		if ( ! is_array( $input ) ) {
+			return array();
+		}
+
+		$sanitized = array();
+
+		// Safely sanitize standard text fields.
+		if ( isset( $input['api_key_id'] ) ) {
+			$sanitized['api_key_id'] = sanitize_text_field( $input['api_key_id'] );
+		}
+		if ( isset( $input['version'] ) ) {
+			$sanitized['version'] = sanitize_text_field( $input['version'] );
+		}
+
+		// Safely sanitize URLs.
+		$url_fields = array( 'api_url', 'widget_url', 'registration_url', 'oembed_url', 'geoip_url' );
+		foreach ( $url_fields as $field ) {
+			if ( isset( $input[ $field ] ) ) {
+				$sanitized[ $field ] = sanitize_url( $input[ $field ] );
+			}
+		}
+
+		// Custom sanitizer for API key.
+		if ( isset( $input['api_key'] ) ) {
+			$sanitized['api_key'] = Civist_Settings_Manager::sanitize_key( $input['api_key'] );
+		}
+
+		return $sanitized;
 	}
 }
 

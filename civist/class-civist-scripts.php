@@ -222,26 +222,6 @@ class Civist_Scripts {
 	}
 
 	/**
-	 * Register and enqueue the Freshdesk Widget scripts
-	 */
-	public function enqueue_freshdesk_widget_scripts() {
-		wp_enqueue_script( 'freshdesk_widget', 'https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js', array(), null, true ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
-	}
-
-	/**
-	 * Sets async attr in script.
-	 *
-	 * @param string $tag The script tag.
-	 * @param string $handle The handle or id of the enqueued script.
-	 */
-	public function add_async( $tag, $handle ) {
-		if ( 'freshdesk_widget' !== $handle ) {
-			return $tag;
-		}
-		return str_replace( '></script>', ' async></script>', $tag );
-	}
-
-	/**
 	 * Builds the params that should be injected into js files under `civist_public` global
 	 *
 	 * @return array
