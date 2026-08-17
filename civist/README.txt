@@ -4,7 +4,7 @@ Tags: petition, fundraising, donation, activism
 Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 7.1
-Stable tag: 8.0.0
+Stable tag: 8.0.2
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -32,6 +32,16 @@ Downloading the plugin and installing it from the ZIP-file is another option. Yo
 * Activate the plugin
 
 ## Changelog
+
+### Release 8.0.2 - 2026-08-17 - Update recommended
+
+#### Feature Additions
+
+* The plugin is ready for WordPress 7.1
+
+#### Bug Fixes
+
+* Fixed: The Civist Gutenberg blocks did not work in WordPress 7.1
 
 ### Release 8.0.0 – 2026-06-24 - Security Update Recommended
 

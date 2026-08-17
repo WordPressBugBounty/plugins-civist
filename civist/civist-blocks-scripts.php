@@ -11,5 +11,5 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-$civist_webpack_files = json_decode( '{"embed":{"size":223481,"entry":"civist-wordpress-blocks-embed.js","hash":"4812fc075c6374d63e01","css":["civist-wordpress-blocks-embed.css"]},"editor":{"size":2151833,"entry":"civist-wordpress-blocks-editor.js","hash":"e7e7437315282b38ded3","css":[]}}' );
+$civist_webpack_files = json_decode( '{"embed":{"size":223481,"entry":"civist-wordpress-blocks-embed.js","hash":"10cd49b70bef979b78aa","css":["civist-wordpress-blocks-embed.css"]},"editor":{"size":2151028,"entry":"civist-wordpress-blocks-editor.js","hash":"2be48431751710f73b42","css":[]}}' );
 
