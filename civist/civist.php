@@ -3,7 +3,7 @@
  *
  * Plugin Name: Civist - Petitions and Fundraising
  * Description: With Civist you create petitions directly in WordPress, raise funds and build strong supporter networks.
- * Version:     8.0.2
+ * Version:     8.0.3
  * Author:      Civist
  * Author URI:  https://civist.com
  * License:     MIT
@@ -30,7 +30,7 @@ register_uninstall_hook( __FILE__, 'civist_uninstall' );
  * Instantiate the plugin class
  */
 function civist_run() {
-	$version = '8.0.2';
+	$version = '8.0.3';
 	$plugin_name = 'Civist';
 	$plugin_slug = 'civist';
 	$plugin_text_domain = 'civist';
